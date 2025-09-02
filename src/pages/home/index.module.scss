@@ -2,4 +2,112 @@
   width: 100%;
   height: 100%;
   background-color: $bgc-1;
+  box-sizing: border-box;
+  padding: 56px 20px 70px 20px;
+  .top {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 56px;
+    box-sizing: border-box;
+    padding: 0 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    .name {
+      font-size: 20px;
+      font-weight: 600;
+      color: $font-1;
+      font-size: 16px;
+    }
+  }
+  .loveData {
+    width: 100%;
+    background: linear-gradient(
+      135deg,
+      #ff7b9c 0%,
+      #a78bfa 100%
+    ); /* 粉紫渐变 */
+    color: white;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+    .lovemain {
+      font-size: 25px;
+      margin: 5px 0;
+    }
+  }
+  .memory {
+    background-color: #fff;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px 20px 25px 20px;
+    box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+    .lovespan {
+      font-weight: 600;
+    }
+    .dataItem {
+      .loveItem {
+        margin-top: 10px;
+        border-bottom: 0.5px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 10px;
+        .loveItemName {
+          font-size: 14px;
+        }
+        .loveItemDate {
+          font-size: 14px;
+          color: $main-1;
+        }
+      }
+    }
+  }
+  .message {
+    background-color: #fff;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px 20px 25px 20px;
+    box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+    .lovespan {
+      font-weight: 600;
+    }
+    .dataItem {
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+      color: $fu-1;
+      font-style: italic;
+    }
+  }
+  .four {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+    .fourItem {
+      background-color: #fff;
+      border-radius: 16px;
+      box-sizing: border-box;
+      padding: 20px 20px 25px 20px;
+      box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+      .fourItemName {
+        text-align: center;
+        font-size: 30px;
+      }
+      .fourItemName:nth-child(2) {
+        font-size: 14px;
+        color: $font-2;
+        margin-top: 5px;
+      }
+    }
+  }
 }
