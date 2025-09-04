@@ -3,6 +3,7 @@
   height: 100%;
   background-color: $bgc-1;
   box-sizing: border-box;
+  overflow: auto;
   padding: 56px 20px 70px 20px;
   .top {
     position: fixed;
