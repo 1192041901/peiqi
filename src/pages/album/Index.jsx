@@ -5,6 +5,7 @@ import Add from "./components/add/index.jsx";
 import { useSelector } from "react-redux";
 import { getAlbum } from "../../store/modules/album/selectors.jsx";
 import Detail from "./components/detail/index.jsx";
+import Hint from "./components/hint/index.jsx";
 const Album = () => {
   const [active, setActive] = useState("全部"); // 当前选中的导航
   const [addState, setAddState] = useState(false); // 添加状态
@@ -12,6 +13,7 @@ const Album = () => {
   const [albumList, setAlbumList] = useState([]); // 当前选中的相册信息
   const [detailState, setDetailState] = useState(false); // 详情状态
   const [detailParams, setDetailParams] = useState({}); // 详情参数
+  const [hintState, setHintState] = useState(true); // 提示状态
   // 导航
   const handleNav = (name) => {
     setActive(name);
@@ -75,6 +77,8 @@ const Album = () => {
       {detailState && (
         <Detail params={detailParams} setDetailState={setDetailState} />
       )}
+      {/* 提示 */}
+      {hintState && <Hint setHintState={setHintState} />}
     </div>
   );
 };
