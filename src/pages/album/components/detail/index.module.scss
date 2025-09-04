@@ -12,7 +12,11 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   .warp {
-    width: 100%;
+    width: 92%;
+    box-sizing: border-box;
+    padding: 20px 0;
+    border-radius: 10px;
+    background-color: #fff;
     .detailHeader {
       font-size: 20px;
       font-weight: 600;

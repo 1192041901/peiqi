@@ -4,11 +4,13 @@ import { getUserInfo } from "../../store/modules/user/selectors";
 import { delDate } from "../../utils/delDate";
 import { useEffect, useState } from "react";
 import { quote } from "../../constants/quote";
+import { getDate, getLoveBefore } from "../../store/modules/date/selectors";
 const Home = () => {
+  const loveBefore = useSelector(getLoveBefore);
+  const data = useSelector(getDate);
   const userInfo = useSelector(getUserInfo);
-
-  const diffDays = delDate(userInfo.loveBefore);
-  const mainData = userInfo.data;
+  const diffDays = delDate(loveBefore);
+  const mainData = data;
   const four = [
     {
       logo: "📷",

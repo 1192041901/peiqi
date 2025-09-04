@@ -7,7 +7,7 @@ const initialState = {
 const dateReducer = (state = initialState, action) => {
   switch (action.type) {
     case types.SET_DATA:
-      return { ...state, data: action.payload };
+      return { ...action.payload };
     case types.UPDATE_DATA:
       let id = action.payload.id;
       let index = state.data.findIndex((item) => item.id === id);
