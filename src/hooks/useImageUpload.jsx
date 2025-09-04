@@ -37,11 +37,12 @@ export const useImageUpload = (apiProvider = "imgbb") => {
   const uploadToImgBB = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
+    let key = process.env.VITE_APP_APIKEY;
 
-    const response = await fetch(
-      `https://api.imgbb.com/1/upload?key=618faa330faa6cd06224b12843c35aaa`,
-      { method: "POST", body: formData }
-    );
+    const response = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
+      method: "POST",
+      body: formData,
+    });
 
     const data = await response.json();
     return data.data.url;

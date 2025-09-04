@@ -1,0 +1,43 @@
+.detail {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  .warp {
+    width: 100%;
+    .detailHeader {
+      font-size: 20px;
+      font-weight: 600;
+      color: $main-1;
+      text-align: center;
+    }
+    .detailImg {
+      margin: 0 auto;
+      margin-top: 10px;
+      width: 80%;
+      height: 350px;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+    .detailDesc {
+      font-size: 14px;
+      color: $font-1;
+      text-align: center;
+      max-height: 200px;
+      overflow-y: auto;
+      text-align: center;
+    }
+  }
+}

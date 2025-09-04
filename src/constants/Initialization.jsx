@@ -30,7 +30,7 @@ export const defAlbum = [
   {
     id: 1,
     type: "日常",
-    img: "https://imgbb.com/1/upload?key=618faa330faa6cd06224b12843c35aaa",
+    img: "https://i.ibb.co/h1hm2KJX/005-Qblgkgy1hh0zhejun7j30sg0qy0xq.jpg",
     desc: "和猪猪的第一次约会",
   },
 ];

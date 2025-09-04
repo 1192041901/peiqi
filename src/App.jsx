@@ -9,7 +9,6 @@ import { defUser, defAlbum, defData } from "./constants/Initialization.jsx";
 function App() {
   const dispatch = useDispatch();
   const isLogin = useSelector(getIsLogin);
-
   // 初始化用户信息
   useEffect(() => {
     if (!isLogin) {

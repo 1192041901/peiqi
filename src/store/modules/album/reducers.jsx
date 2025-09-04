@@ -13,19 +13,24 @@ const albumReducer = (state = initialState, action) => {
       let id = action.payload.id;
       let index = state.album.findIndex((item) => item.id === id);
       if (index !== -1) {
-        state.album[index] = action.payload;
+        // 更新现有相册
+        const newAlbum = [...state.album];
+        newAlbum[index] = action.payload;
+        return { ...state, album: newAlbum };
       } else {
-        state.album.push(action.payload);
+        // 添加新相册
+        return { ...state, album: [...state.album, action.payload] };
       }
-      return { ...state, album: state.album };
     case types.DELETE_ALBUM:
       // 删除相册信息
       let id2 = action.payload.id;
       let index2 = state.album.findIndex((item) => item.id === id2);
-      if (index !== -1) {
-        state.album.splice(index2, 1);
+      if (index2 !== -1) {
+        // 创建新数组，删除指定项
+        const newAlbum = state.album.filter((item) => item.id !== id2);
+        return { ...state, album: newAlbum };
       }
-      return { ...state, album: state.album };
+      return state;
     case types.GET_ALBUM:
       // 获取相册信息
       return { ...state, album: action.payload };
