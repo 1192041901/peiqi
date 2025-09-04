@@ -4,7 +4,13 @@
 
 # 技术栈
 
-### React + Redux
+### React
+
+# 声明
+
+### 项目文件上传采用 imgBB 远程地址，每个月 500 次不限制大小的图片上传，同时也提供了其他的远程方式，可以自行在 useImageUpload 按需补充<br>
+
+重要的是不要用我的 imgBB 密钥，自己去https://api.imgbb.com/ 注册一个，免费的！！！
 
 # 联系方式
 
