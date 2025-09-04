@@ -7,7 +7,7 @@ import rootReducer from "./rootReducer";
 const persistConfig = {
   key: "root", // 存储的key
   storage, // 使用localStorage
-  whitelist: ["user"], // 只持久化user模块
+  whitelist: ["user", "date", "album"], // 只持久化user模块
   // blacklist: [], // 不持久化的模块
 };
 

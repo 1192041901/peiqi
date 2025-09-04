@@ -3,11 +3,12 @@ import styles from "./index.module.scss";
 import { getUserInfo } from "../../store/modules/user/selectors";
 import { delDate } from "../../utils/delDate";
 import { useEffect, useState } from "react";
+import { quote } from "../../constants/quote";
 const Home = () => {
   const userInfo = useSelector(getUserInfo);
+
   const diffDays = delDate(userInfo.loveBefore);
   const mainData = userInfo.data;
-  const message = userInfo.message;
   const four = [
     {
       logo: "📷",
@@ -28,7 +29,7 @@ const Home = () => {
   ];
   const [num, setNum] = useState(0);
   useEffect(() => {
-    setNum(Math.floor(Math.random() * message.length));
+    setNum(Math.floor(Math.random() * quote.length));
   }, []);
   return (
     <div className={styles.home}>
@@ -56,7 +57,7 @@ const Home = () => {
       <div className={styles.message}>
         <div className={styles.lovespan}>🎉今天想对你说的话</div>
         <div className={styles.dataItem}>
-          <span className={styles.mdItemName}>{message[num]}</span>
+          <span className={styles.mdItemName}>{quote[num]}</span>
         </div>
       </div>
       <div className={styles.four}>

@@ -4,3 +4,10 @@ body {
   height: 100%;
   background-color: $bgc-1;
 }
+#root {
+  height: 100%;
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  display: none;
+}

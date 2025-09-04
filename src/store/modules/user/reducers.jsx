@@ -1,8 +1,9 @@
 import * as types from "./type";
 
+// 用户基本信息
 const initialState = {
-  userInfo: null,
-  isLogin: false,
+  userInfo: null, //用户信息
+  isLogin: false, //登录状态
 };
 const userReducer = (state = initialState, action) => {
   switch (action.type) {

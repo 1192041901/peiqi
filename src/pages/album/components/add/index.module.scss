@@ -1,0 +1,102 @@
+.add {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .addContent {
+    width: 80%;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    .header {
+      font-size: 20px;
+      font-weight: 600;
+      color: $main-1;
+      text-align: center;
+    }
+    .item {
+      margin-top: 10px;
+      .title {
+        font-size: 12px;
+        font-weight: 400;
+        color: $font-1;
+        margin-bottom: 5px;
+      }
+      .com {
+        width: 100%;
+        height: 40px;
+        background-color: #eee;
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 14px;
+        color: $font-1;
+        span {
+          font-size: 14px;
+          color: $font-1;
+        }
+      }
+      .select {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 0 10px;
+        font-size: 14px;
+        color: $font-1;
+        outline: none;
+      }
+      .input {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        padding: 0 10px;
+        box-sizing: border-box;
+        outline: none;
+      }
+    }
+    .control {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+    }
+    .cancel {
+      width: 45%;
+      height: 40px;
+      background-color: #eee;
+      border-radius: 5px;
+      display: flex;
+      text-align: center;
+      line-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        color: $font-1;
+      }
+    }
+    .sure {
+      width: 45%;
+      height: 40px;
+      background-color: $main-1;
+      border-radius: 5px;
+      display: flex;
+      line-height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      span {
+        color: $bgc-2;
+      }
+    }
+  }
+}
