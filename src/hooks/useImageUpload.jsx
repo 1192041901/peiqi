@@ -37,7 +37,7 @@ export const useImageUpload = (apiProvider = "imgbb") => {
   const uploadToImgBB = async (file) => {
     const formData = new FormData();
     formData.append("image", file);
-    let key = process.env.VITE_APP_APIKEY;
+    let key = import.meta.env.VITE_APP_APIKEY;
 
     const response = await fetch(`https://api.imgbb.com/1/upload?key=${key}`, {
       method: "POST",
