@@ -11,6 +11,8 @@ function App() {
   const isLogin = useSelector(getIsLogin);
   // 初始化用户信息
   useEffect(() => {
+    // console.log(1);
+
     if (!isLogin) {
       // 初始化用户基本信息
       dispatch({
