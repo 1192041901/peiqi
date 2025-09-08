@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import type from "./index.module.scss";
-function Hint() {
+import { getIsFirst } from "../../../../store/modules/album/selectors";
+import { useDispatch, useSelector } from "react-redux";
+function Hint({ setHintState }) {
   const [timerState, setTimerState] = useState(false);
   const [timer, setTimer] = useState(5);
+
   useEffect(() => {
     let timerInterval = setInterval(() => {
       setTimer((prevTimer) => {
-        console.log(prevTimer, 66666);
-        if (prevTimer > 0) {
+        if (prevTimer > 1) {
           return prevTimer - 1;
         } else {
           setTimerState(true);
@@ -22,9 +24,11 @@ function Hint() {
       clearInterval(timerInterval);
     };
   }, []);
+
   const handleConfirm = () => {
     if (timerState) {
       console.log("确定");
+      setHintState(false);
     }
   };
   return (

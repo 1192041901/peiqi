@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import * as type from "./index.module.scss";
 import { navList } from "./constants/index.jsx";
 import Add from "./components/add/index.jsx";
-import { useSelector } from "react-redux";
-import { getAlbum } from "../../store/modules/album/selectors.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { getAlbum, getIsFirst } from "../../store/modules/album/selectors.jsx";
 import Detail from "./components/detail/index.jsx";
 import Hint from "./components/hint/index.jsx";
 const Album = () => {
@@ -13,7 +13,9 @@ const Album = () => {
   const [albumList, setAlbumList] = useState([]); // 当前选中的相册信息
   const [detailState, setDetailState] = useState(false); // 详情状态
   const [detailParams, setDetailParams] = useState({}); // 详情参数
-  const [hintState, setHintState] = useState(true); // 提示状态
+  const [hintState, setHintState] = useState(false); // 提示状态
+  const dispatch = useDispatch();
+  const isFirst = useSelector(getIsFirst);
   // 导航
   const handleNav = (name) => {
     setActive(name);
@@ -31,6 +33,16 @@ const Album = () => {
       setAlbumList(album.filter((item) => item.type === active));
     }
   }, [active, album]);
+  // 是否是第一次
+  useEffect(() => {
+    if (isFirst) {
+      setHintState(true);
+      dispatch({
+        type: "UPDATE_IS_FIRST",
+        payload: false,
+      });
+    }
+  }, [isFirst]);
   return (
     <div className={type.album}>
       {/* 顶部 */}

@@ -14,8 +14,35 @@
   .hintWarp {
     width: 92%;
     box-sizing: border-box;
-    padding: 20px 0;
     border-radius: 10px;
     background-color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+    padding: 20px;
+    .hintTitle {
+      font-size: 20px;
+      font-weight: 600;
+      color: $main-1;
+      text-align: center;
+    }
+    .hintContent {
+      margin-top: 10px;
+      font-size: 14px;
+      color: $font-1;
+      text-align: center;
+    }
+    .hintFooter {
+      width: 100px;
+      height: 40px;
+      margin: 0 auto;
+      background-color: $main-1;
+      color: #fff;
+      border-radius: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+    }
   }
 }

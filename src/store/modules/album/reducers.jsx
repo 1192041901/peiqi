@@ -2,6 +2,7 @@ import * as types from "./type";
 // 相册信息
 const initialState = {
   album: [],
+  isFirst: true,
 };
 const albumReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -34,6 +35,12 @@ const albumReducer = (state = initialState, action) => {
     case types.GET_ALBUM:
       // 获取相册信息
       return { ...state, album: action.payload };
+    case types.UPDATE_IS_FIRST:
+      // 更新是否是第一次
+      return { ...state, isFirst: action.payload };
+    case types.GET_IS_FIRST:
+      // 获取是否是第一次
+      return { ...state, isFirst: action.payload };
     default:
       return state;
   }
