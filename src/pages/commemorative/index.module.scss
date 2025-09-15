@@ -1,0 +1,106 @@
+.commemorative {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .commemorativeTop {
+    width: 100%;
+    height: 56px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .commemorativeTopLeft {
+      font-size: 16px;
+      font-weight: 600;
+      color: $font-1;
+    }
+    .commemorativeTopRight {
+      width: 30px;
+      height: 30px;
+      font-size: 20px;
+      background-color: $main-1;
+      border-radius: 30px;
+      text-align: center;
+      span {
+        color: $bgc-2;
+      }
+    }
+  }
+  .commemorativeContent {
+    flex: 1 1 0;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding-bottom: 60px;
+    overflow: auto;
+    .title {
+      box-sizing: border-box;
+      font-size: 16px;
+      font-weight: 600;
+      color: $font-1;
+      height: 35px;
+      line-height: 30px;
+      padding-left: 20px;
+      &.important {
+        color: $main-1;
+      }
+    }
+    .line {
+      margin-top: 10px;
+      border-bottom: 2px solid #fff;
+    }
+    .content {
+      box-sizing: border-box;
+      padding: 0 20px;
+      .commemorativeItem {
+        box-sizing: border-box;
+        padding: 5px 10px 10px 10px;
+        border-radius: 10px;
+        border-left: 5px solid $main-1;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        background-color: $bgc-2;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .commemorativeItemName {
+          width: 200px;
+          .commemorativeItemNameTop {
+            font-size: 16px;
+            color: $font-1;
+          }
+          .commemorativeItemNameBottom {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+            .commemorativeItemNameBottomLeft {
+              font-size: 12px;
+              color: $font-2;
+            }
+            .commemorativeItemNameBottomRight {
+              font-size: 12px;
+              margin-left: 10px;
+              color: #fff;
+              padding: 1px 5px;
+              border-radius: 5px;
+              background-color: $main-1;
+            }
+          }
+        }
+      }
+      .commemorativeItemDate {
+        width: 50px;
+        .commemorativeItemDateTop {
+          font-size: 20px;
+          color: $main-1;
+          text-align: end;
+        }
+        .commemorativeItemDateSpan {
+          font-size: 12px;
+          color: $font-2;
+          text-align: end;
+        }
+      }
+    }
+  }
+}

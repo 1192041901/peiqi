@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
 import type from "./index.module.scss";
-import { getIsFirst } from "../../../../store/modules/album/selectors";
-import { useDispatch, useSelector } from "react-redux";
 function Hint({ setHintState }) {
   const [timerState, setTimerState] = useState(false);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     let timerInterval = setInterval(() => {
