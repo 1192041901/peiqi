@@ -1,21 +1,252 @@
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getDate } from "../../store/modules/date/selectors";
 import { delDate, delDate2 } from "../../utils/delDate";
+import Dialog from "../../comment/dialog";
 const Commemorative = () => {
   const [addState, setAddState] = useState(false);
+  const [editState, setEditState] = useState(false);
   const listAll = useSelector(getDate);
   const [listTop, setListTop] = useState([]);
   const [listOnce, setListOnce] = useState([]);
   const [listYear, setListYear] = useState([]);
+  const [addParams, setAddParams] = useState({
+    name: "",
+    type: "once",
+    date: "",
+    top: false,
+  });
+  const [editParams, setEditParams] = useState({
+    id: null,
+    name: "",
+    type: "once",
+    date: "",
+    top: false,
+  });
+  // 新增纪念日文案
+  const dialogParams = {
+    title: "添加纪念日",
+    sureSpan: "确定",
+    cancelSpan: "取消",
+  };
+  // 编辑纪念日文案
+  const editDialogParams = {
+    title: "编辑纪念日",
+    sureSpan: "确定",
+    cancelSpan: "取消",
+  };
+
+  // 纪念日日期处理
+  const handleDate = (e) => {
+    let date = e.target.value;
+    let year = date.split("-")[0];
+    let month = date.split("-")[1];
+    let day = date.split("-")[2];
+    let date2 = year + "-" + month + "-" + day;
+    setAddParams({ ...addParams, date: date2 });
+  };
+  // 编辑纪念日日期处理
+  const handleEditDate = (e) => {
+    let date = e.target.value;
+    let year = date.split("-")[0];
+    let month = date.split("-")[1];
+    let day = date.split("-")[2];
+    let date2 = year + "-" + month + "-" + day;
+    setEditParams({ ...editParams, date: date2 });
+  };
+  const dispatch = useDispatch();
+  // 新增纪念日(确定)
+  const handleAdd = () => {
+    if (addParams.name === "" || addParams.date === "") {
+      alert("请填写完信息");
+      return;
+    }
+    dispatch({
+      type: "ADD_DATA",
+      payload: addParams,
+    });
+    setAddState(false);
+    resetAddParams();
+  };
+  // 新增纪念日(取消)
+  const handleCancel = () => {
+    setAddState(false);
+    resetAddParams();
+  };
+  // 重置新增纪念日参数
+  const resetAddParams = () => {
+    setAddParams({
+      name: "",
+      type: "once",
+      date: "",
+      top: false,
+    });
+  };
+  // 编辑纪念日(确定)
+  const handleEdit = () => {
+    if (editParams.name === "" || editParams.date === "") {
+      alert("请填写完信息");
+      return;
+    }
+    dispatch({
+      type: "UPDATE_DATA",
+      payload: editParams,
+    });
+    setEditState(false);
+    resetEditParams();
+  };
+  // 编辑纪念日(取消)
+  const handleEditCancel = () => {
+    setEditState(false);
+    resetEditParams();
+  };
+  // 重置编辑纪念日参数
+  const resetEditParams = () => {
+    setEditParams({
+      id: null,
+      name: "",
+      type: "once",
+      date: "",
+      top: false,
+    });
+  };
+  // 打开编辑弹窗
+  const openEditDialog = (item) => {
+    setEditParams({
+      id: item.id,
+      name: item.name,
+      type: item.type,
+      date: item.date,
+      top: item.top,
+    });
+    setEditState(true);
+  };
+  // 新增纪念日回调
+  const callDialog = {
+    onClose: handleCancel,
+    onSure: handleAdd,
+  };
+  // 编辑纪念日回调
+  const editCallDialog = {
+    onClose: handleEditCancel,
+    onSure: handleEdit,
+  };
+  // 删除纪念日
+  const handleDelete = () => {
+    dispatch({
+      type: "DELETE_DATA",
+      payload: editParams,
+    });
+    setEditState(false);
+    resetEditParams();
+  };
+  // 纪念日分类处理
   useEffect(() => {
     setListTop(listAll.filter((item) => item.top));
     setListOnce(listAll.filter((item) => item.type === "once" && !item.top));
     setListYear(listAll.filter((item) => item.type === "year" && !item.top));
+    console.log(listAll, 666);
   }, [listAll]);
+
   return (
     <div className={styles.commemorative}>
+      {/* 新增纪念日 */}
+      {addState && (
+        <Dialog callDialog={callDialog} params={dialogParams}>
+          <div className={styles.addContent}>
+            <div className={styles.adiTitle}>纪念日名称</div>
+            <input
+              className={styles.adiInput}
+              value={addParams.name}
+              onChange={(e) =>
+                setAddParams({ ...addParams, name: e.target.value })
+              }
+              type="text"
+              placeholder="比如：和猪猪的第一次约会"
+            />
+            <div className={styles.adiTitle}>纪念日类型</div>
+            <select
+              className={styles.adiSelect}
+              value={addParams.type}
+              onChange={(e) =>
+                setAddParams({ ...addParams, type: e.target.value })
+              }
+            >
+              <option value="year">每年重复</option>
+              <option value="once">单次纪念日</option>
+            </select>
+            <div className={styles.adiTitle}>纪念日日期</div>
+            <input
+              className={styles.adiInput}
+              type="date"
+              value={addParams.date}
+              onChange={(e) => handleDate(e)}
+            />
+            <div className={styles.adiTitle}>是否置顶</div>
+            <select
+              className={styles.adiSelect}
+              value={addParams.top}
+              onChange={(e) =>
+                setAddParams({ ...addParams, top: e.target.value })
+              }
+            >
+              <option value="true">是</option>
+              <option value="false">否</option>
+            </select>
+          </div>
+        </Dialog>
+      )}
+      {/* 编辑纪念日*/}
+      {editState && (
+        <Dialog callDialog={editCallDialog} params={editDialogParams}>
+          <div className={styles.addContent}>
+            <div className={styles.adiTitle}>纪念日名称</div>
+            <input
+              className={styles.adiInput}
+              value={editParams.name}
+              onChange={(e) =>
+                setEditParams({ ...editParams, name: e.target.value })
+              }
+              type="text"
+              placeholder="比如：和猪猪的第一次约会"
+            />
+            <div className={styles.adiTitle}>纪念日类型</div>
+            <select
+              className={styles.adiSelect}
+              value={editParams.type}
+              onChange={(e) =>
+                setEditParams({ ...editParams, type: e.target.value })
+              }
+            >
+              <option value="year">每年重复</option>
+              <option value="once">单次纪念日</option>
+            </select>
+            <div className={styles.adiTitle}>纪念日日期</div>
+            <input
+              className={styles.adiInput}
+              type="date"
+              value={editParams.date}
+              onChange={(e) => handleEditDate(e)}
+            />
+            <div className={styles.adiTitle}>是否置顶</div>
+            <select
+              className={styles.adiSelect}
+              value={editParams.top}
+              onChange={(e) =>
+                setEditParams({ ...editParams, top: e.target.value })
+              }
+            >
+              <option value="true">是</option>
+              <option value="false">否</option>
+            </select>
+            <div className={styles.btn} onClick={handleDelete}>
+              删除
+            </div>
+          </div>
+        </Dialog>
+      )}
+
       <div className={styles.commemorativeTop}>
         <div className={styles.commemorativeTopLeft}>纪念日管理</div>
         <div className={styles.commemorativeTopRight}>
@@ -26,7 +257,11 @@ const Commemorative = () => {
         <div className={styles.title + " " + styles.important}>置顶纪念日</div>
         <div className={styles.content}>
           {listTop.map((item) => (
-            <div className={styles.commemorativeItem} key={item.id}>
+            <div
+              className={styles.commemorativeItem}
+              key={item.id}
+              onClick={() => openEditDialog(item)}
+            >
               <div className={styles.commemorativeItemName}>
                 <div className={styles.commemorativeItemNameTop}>
                   {item.name}
@@ -59,7 +294,11 @@ const Commemorative = () => {
         <div className={styles.title}>单次纪念日</div>
         <div className={styles.content}>
           {listOnce.map((item) => (
-            <div className={styles.commemorativeItem} key={item.id}>
+            <div
+              className={styles.commemorativeItem}
+              key={item.id}
+              onClick={() => openEditDialog(item)}
+            >
               <div className={styles.commemorativeItemName}>
                 <div className={styles.commemorativeItemNameTop}>
                   {item.name}
@@ -91,7 +330,11 @@ const Commemorative = () => {
         <div className={styles.title}>逐年纪念日</div>
         <div className={styles.content}>
           {listYear.map((item) => (
-            <div className={styles.commemorativeItem} key={item.id}>
+            <div
+              className={styles.commemorativeItem}
+              key={item.id}
+              onClick={() => openEditDialog(item)}
+            >
               <div className={styles.commemorativeItemName}>
                 <div className={styles.commemorativeItemNameTop}>
                   {item.name}

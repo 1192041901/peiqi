@@ -1,5 +1,7 @@
 // 设置重要日期信息
 export const SET_DATA = "SET_DATA";
+// 新增重要日期信息
+export const ADD_DATA = "ADD_DATA";
 // 更新重要日期信息
 export const UPDATE_DATA = "UPDATE_DATA";
 // 删除重要日期信息

@@ -1,10 +1,11 @@
 /*
   计算距离当今已过去的天数（yyyy-mm-dd）
+  返回负数表示已过去的天数，正数表示未来的天数
 */
 export const delDate = (date) => {
   const targetDate = new Date(date);
   const currentDate = new Date();
-  const diffTime = Math.abs(currentDate - targetDate);
+  const diffTime = -(targetDate - currentDate);
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   return diffDays;
 };
