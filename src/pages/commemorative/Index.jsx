@@ -146,7 +146,6 @@ const Commemorative = () => {
     setListTop(listAll.filter((item) => item.top));
     setListOnce(listAll.filter((item) => item.type === "once" && !item.top));
     setListYear(listAll.filter((item) => item.type === "year" && !item.top));
-    console.log(listAll, 666);
   }, [listAll]);
 
   return (

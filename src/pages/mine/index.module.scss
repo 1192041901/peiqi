@@ -1,0 +1,24 @@
+.mine {
+  width: 100%;
+  height: 100%;
+  background-color: $bgc-1;
+  .mineHeader {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background-color: #fff;
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      font-size: 16px;
+      font-weight: 600;
+      color: $font-1;
+    }
+  }
+}
