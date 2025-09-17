@@ -24,7 +24,7 @@ export const defData = {
       type: "year",
       top: false,
       name: "第一次逛街",
-      date: "06-29",
+      date: "2025-06-29",
     },
     {
       id: 3,
