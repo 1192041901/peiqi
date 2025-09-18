@@ -11,8 +11,11 @@ const Home = () => {
   const userInfo = useSelector(getUserInfo);
   const userInfoInfo = useSelector(getUserInfoInfo);
 
-  const diffDays = delDate(userInfoInfo.loveBefore);
-  const mainData = data;
+  // 添加空值检查
+  const diffDays = userInfoInfo?.loveBefore
+    ? delDate(userInfoInfo.loveBefore)
+    : 0;
+  const mainData = data || [];
   const four = [
     {
       logo: "📷",
@@ -39,13 +42,13 @@ const Home = () => {
     <div className={styles.home}>
       <div className={styles.top}>
         <div className={styles.name}>
-          {userInfoInfo.girl}&{userInfoInfo.boy}
+          {userInfoInfo?.girl || ""}&{userInfoInfo?.boy || ""}
         </div>
       </div>
       <div className={styles.loveData}>
         <div className={styles.lovespan}>我们已经在一起</div>
         <div className={styles.lovemain}>{diffDays}</div>
-        <div className={styles.lovedesc}>始于{userInfoInfo.loveBefore}</div>
+        <div className={styles.lovedesc}>始于{userInfoInfo?.loveBefore}</div>
       </div>
       <div className={styles.memory}>
         <div className={styles.lovespan}>📅重要的纪念日</div>
