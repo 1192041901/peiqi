@@ -47,7 +47,10 @@ const Home = () => {
       </div>
       <div className={styles.loveData}>
         <div className={styles.lovespan}>我们已经在一起</div>
-        <div className={styles.lovemain}>{diffDays}</div>
+        <div className={styles.lovemain}>
+          {diffDays}
+          <span className={styles.lovemainspan}>天啦</span>
+        </div>
         <div className={styles.lovedesc}>始于{userInfoInfo?.loveBefore}</div>
       </div>
       <div className={styles.memory}>

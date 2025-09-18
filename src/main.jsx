@@ -6,6 +6,10 @@ import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App.jsx";
 import store, { persistor } from "./store/index.jsx";
+import { setStoreRef } from "./utils/getID.jsx";
+
+// 设置 store 引用
+setStoreRef(store);
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>

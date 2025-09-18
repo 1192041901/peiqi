@@ -4,10 +4,12 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import supabase from "./utils/supabase";
 import routes from "./router/routes";
-
+import Loading from "./router/loading/loading";
+import { useState } from "react";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
   const handleClick = async (userId) => {
     // 根据用户 ID 获取 profiles 表中的信息
     const { data, error, status } = await supabase
@@ -47,6 +49,7 @@ function App() {
         payload: userInfo,
       });
     }
+    setIsLoading(false);
     return data;
   };
 
@@ -54,7 +57,9 @@ function App() {
     handleGetUserInfo();
   }, []);
 
-  return (
+  return isLoading ? (
+    <div></div>
+  ) : (
     <Routes>
       {routes.map((route, index) => (
         <Route key={index} path={route.path} element={route.element} />

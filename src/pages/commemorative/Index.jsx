@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { useDispatch, useSelector } from "react-redux";
-import { getDate } from "../../store/modules/date/selectors";
+import { useDispatch } from "react-redux";
 import { delDate, delDate2 } from "../../utils/delDate";
 import Dialog from "../../comment/dialog";
+import supabase from "../../utils/supabase";
+import getID from "../../utils/getID";
 const Commemorative = () => {
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
-  const listAll = useSelector(getDate);
+  const [listAll, setListAll] = useState([]);
   const [listTop, setListTop] = useState([]);
   const [listOnce, setListOnce] = useState([]);
   const [listYear, setListYear] = useState([]);
@@ -24,6 +25,22 @@ const Commemorative = () => {
     date: "",
     top: false,
   });
+  // 获取纪念日信息
+  const handleGetDate = async () => {
+    const id = await getID();
+    const { data, error } = await supabase
+      .from("commemorative")
+      .select("*")
+      .eq("user_id", id);
+    if (error) {
+      console.log(error);
+    } else {
+      setListAll(data);
+    }
+  };
+  useEffect(() => {
+    handleGetDate();
+  }, []);
   // 新增纪念日文案
   const dialogParams = {
     title: "添加纪念日",
@@ -57,15 +74,24 @@ const Commemorative = () => {
   };
   const dispatch = useDispatch();
   // 新增纪念日(确定)
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (addParams.name === "" || addParams.date === "") {
       alert("请填写完信息");
       return;
     }
-    dispatch({
-      type: "ADD_DATA",
-      payload: addParams,
+    const id = await getID();
+    const { data, error } = await supabase.from("commemorative").insert({
+      user_id: id,
+      name: addParams.name,
+      type: addParams.type,
+      date: addParams.date,
+      top: addParams.top,
     });
+    if (error) {
+      console.log(error);
+    } else {
+      handleGetDate();
+    }
     setAddState(false);
     resetAddParams();
   };
@@ -84,15 +110,26 @@ const Commemorative = () => {
     });
   };
   // 编辑纪念日(确定)
-  const handleEdit = () => {
+  const handleEdit = async () => {
     if (editParams.name === "" || editParams.date === "") {
       alert("请填写完信息");
       return;
     }
-    dispatch({
-      type: "UPDATE_DATA",
-      payload: editParams,
-    });
+    const id = await getID();
+    const { data, error } = await supabase
+      .from("commemorative")
+      .update({
+        name: editParams.name,
+        type: editParams.type,
+        date: editParams.date,
+        top: editParams.top,
+      })
+      .eq("id", editParams.id);
+    if (error) {
+      console.log(error);
+    } else {
+      handleGetDate();
+    }
     setEditState(false);
     resetEditParams();
   };
@@ -133,11 +170,19 @@ const Commemorative = () => {
     onSure: handleEdit,
   };
   // 删除纪念日
-  const handleDelete = () => {
-    dispatch({
-      type: "DELETE_DATA",
-      payload: editParams,
-    });
+  const handleDelete = async () => {
+    const id = await getID();
+    const { data, error } = await supabase
+      .from("commemorative")
+      .delete()
+      .eq("id", editParams.id)
+      .eq("user_id", id);
+    if (error) {
+      console.log(error);
+    } else {
+      handleGetDate();
+    }
+
     setEditState(false);
     resetEditParams();
   };
