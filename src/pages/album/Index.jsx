@@ -6,16 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAlbum, getIsFirst } from "../../store/modules/album/selectors.jsx";
 import Detail from "./components/detail/index.jsx";
 import Hint from "./components/hint/index.jsx";
+import supabase from "../../utils/supabase.jsx";
+import getID from "../../utils/getID.jsx";
 const Album = () => {
   const [active, setActive] = useState("全部"); // 当前选中的导航
   const [addState, setAddState] = useState(false); // 添加状态
-  const album = useSelector(getAlbum); // 全部相册信息
+  // const album = useSelector(getAlbum); // 全部相册信息
   const [albumList, setAlbumList] = useState([]); // 当前选中的相册信息
   const [detailState, setDetailState] = useState(false); // 详情状态
   const [detailParams, setDetailParams] = useState({}); // 详情参数
   const [hintState, setHintState] = useState(false); // 提示状态
   const dispatch = useDispatch();
   const isFirst = useSelector(getIsFirst);
+  const [album, setAlbum] = useState([]);
   // 导航
   const handleNav = (name) => {
     setActive(name);
@@ -25,6 +28,19 @@ const Album = () => {
     setDetailState(true);
     setDetailParams(item);
   };
+  // 获取相册信息
+  const handleGetAlbum = async () => {
+    const id = await getID();
+    console.log(id, 666);
+    const { data, error } = await supabase
+      .from("album")
+      .select("*")
+      .eq("user_id", id);
+    setAlbum(data);
+  };
+  useEffect(() => {
+    handleGetAlbum();
+  }, []);
   // 相册信息筛选
   useEffect(() => {
     if (active === "全部") {
@@ -84,7 +100,13 @@ const Album = () => {
         </div>
       </div>
       {/* 添加 */}
-      {addState && <Add navList={navList} setAddState={setAddState} />}
+      {addState && (
+        <Add
+          navList={navList}
+          setAddState={setAddState}
+          handleGetAlbum={handleGetAlbum}
+        />
+      )}
       {/* 详情 */}
       {detailState && (
         <Detail params={detailParams} setDetailState={setDetailState} />

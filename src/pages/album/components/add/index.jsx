@@ -1,16 +1,13 @@
 import { useEffect, useState } from "react";
 import type from "./index.module.scss";
 import { useImageUpload } from "@/hooks/useImageUpload";
-import { useDispatch, useSelector } from "react-redux";
-import { getAlbum } from "../../../../store/modules/album/selectors";
-const Add = ({ navList, setAddState }) => {
+import supabase from "../../../../utils/supabase";
+import getID from "../../../../utils/getID";
+const Add = ({ navList, setAddState, handleGetAlbum }) => {
   const { upload, loading, error, imageUrl, setImageUrl } = useImageUpload();
   const [spanName, setSpanName] = useState("从相册中选择");
   const [typeActive, setTypeActive] = useState(navList[1].name);
   const [desc, setDesc] = useState("");
-  const album = useSelector(getAlbum);
-
-  const dispatch = useDispatch();
   //上传状态文案切换
   useEffect(() => {
     if (loading) {
@@ -60,7 +57,7 @@ const Add = ({ navList, setAddState }) => {
     file.remove();
   };
   // 上传业务处理
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (!imageUrl) {
       alert("请选择照片");
       return;
@@ -74,19 +71,19 @@ const Add = ({ navList, setAddState }) => {
       alert("请输入照片描述");
       return;
     }
-    dispatch({
-      type: "UPDATE_ALBUM",
-      payload: {
-        id: album[album.length - 1].id + 1,
-        img: imageUrl,
-        type: typeActive,
-        desc: desc,
-      },
+    const id = await getID();
+    const { data, error } = await supabase.from("album").insert({
+      user_id: id,
+      img: imageUrl,
+      type: typeActive,
+      desc: desc,
     });
     setAddState(false);
     setImageUrl("");
     setDesc("");
     setTypeActive(navList[1].name);
+    // 更新相册信息
+    handleGetAlbum();
   };
   //输入限制
   const handleInput = (e) => {

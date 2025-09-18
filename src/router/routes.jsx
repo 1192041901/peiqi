@@ -5,7 +5,9 @@ const Home = lazy(() => import("../pages/home/Index"));
 const Commemorative = lazy(() => import("../pages/commemorative/Index.jsx"));
 const Album = lazy(() => import("../pages/album/Index"));
 const User = lazy(() => import("../pages/mine/Index"));
-
+const Test = lazy(() => import("../pages/test/index"));
+const Login = lazy(() => import("../pages/login/login/index"));
+const Register = lazy(() => import("../pages/login/register/index"));
 const RouteLoading = ({ element }) => {
   return <Suspense fallback={<Loading />}>{element}</Suspense>;
 };
@@ -47,11 +49,19 @@ const routes = [
   },
   {
     path: "/user",
-    element: (
-      <Layout>
-        <RouteLoading element={<User />} />
-      </Layout>
-    ),
+    element: <RouteLoading element={<User />} />,
+  },
+  {
+    path: "/login",
+    element: <RouteLoading element={<Login />} />,
+  },
+  {
+    path: "/register",
+    element: <RouteLoading element={<Register />} />,
+  },
+  {
+    path: "/test",
+    element: <RouteLoading element={<Test />} />,
   },
 ];
 
