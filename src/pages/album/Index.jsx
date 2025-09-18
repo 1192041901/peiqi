@@ -31,7 +31,6 @@ const Album = () => {
   // 获取相册信息
   const handleGetAlbum = async () => {
     const id = await getID();
-    console.log(id, 666);
     const { data, error } = await supabase
       .from("album")
       .select("*")

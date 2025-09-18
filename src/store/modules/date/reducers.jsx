@@ -18,7 +18,6 @@ const dateReducer = (state = initialState, action) => {
     case types.UPDATE_DATA:
       let id = action.payload.id;
       let index = state.data.findIndex((item) => item.id === id);
-      console.log(index, 666);
       if (index !== -1) {
         // 创建新的数组，不直接修改原数组
         const newData = [...state.data];

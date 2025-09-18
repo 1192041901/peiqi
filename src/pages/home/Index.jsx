@@ -1,15 +1,17 @@
 import { useSelector } from "react-redux";
 import styles from "./index.module.scss";
-import { getUserInfo } from "../../store/modules/user/selectors";
+import { getUserInfo } from "../../store/modules/userInfo/selectors";
 import { delDate } from "../../utils/delDate";
 import { useEffect, useState } from "react";
 import { quote } from "../../constants/quote";
 import { getDate, getLoveBefore } from "../../store/modules/date/selectors";
+import { getUserInfoInfo } from "../../store/modules/userInfo/selectors";
 const Home = () => {
-  const loveBefore = useSelector(getLoveBefore);
   const data = useSelector(getDate);
   const userInfo = useSelector(getUserInfo);
-  const diffDays = delDate(loveBefore);
+  const userInfoInfo = useSelector(getUserInfoInfo);
+
+  const diffDays = delDate(userInfoInfo.loveBefore);
   const mainData = data;
   const four = [
     {
@@ -37,13 +39,13 @@ const Home = () => {
     <div className={styles.home}>
       <div className={styles.top}>
         <div className={styles.name}>
-          {userInfo.girl}&{userInfo.boy}
+          {userInfoInfo.girl}&{userInfoInfo.boy}
         </div>
       </div>
       <div className={styles.loveData}>
         <div className={styles.lovespan}>我们已经在一起</div>
         <div className={styles.lovemain}>{diffDays}</div>
-        <div className={styles.lovedesc}>始于{userInfo.loveBefore}</div>
+        <div className={styles.lovedesc}>始于{userInfoInfo.loveBefore}</div>
       </div>
       <div className={styles.memory}>
         <div className={styles.lovespan}>📅重要的纪念日</div>

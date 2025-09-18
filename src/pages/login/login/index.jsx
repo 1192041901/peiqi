@@ -3,6 +3,7 @@ import styles from "./index.module.scss";
 import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import supabase from "../../../utils/supabase";
+import { useDispatch } from "react-redux";
 function Login() {
   const [messageApi, contextHolder] = message.useMessage();
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function Login() {
     password: "",
   });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,6 +39,10 @@ function Login() {
         messageApi.open({
           type: "success",
           content: "登录成功！",
+        });
+        dispatch({
+          type: "SET_USER_INFO",
+          payload: data,
         });
         navigate("/");
       }

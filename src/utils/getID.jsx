@@ -1,12 +1,9 @@
 import supabase from "./supabase";
 const getID = async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) {
-    console.log("用户未登录");
+  const userInfo = useSelector(getUserInfoInfo);
+  if (!userInfo || !userInfo.id) {
     return null;
   }
-  return user.id;
+  return userInfo.id;
 };
 export default getID;

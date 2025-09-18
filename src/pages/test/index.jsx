@@ -57,7 +57,7 @@ function Test() {
   const handleLogin = async () => {
     const { data, error } = await supabase.auth.signInWithPassword({
       email: "1192041901@qq.com",
-      password: "dengshuai0919",
+      password: "123456",
     });
     console.log(data);
     console.log(error);
