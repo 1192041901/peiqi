@@ -6,6 +6,7 @@ import supabase from "./utils/supabase";
 import routes from "./router/routes";
 import Loading from "./router/loading/loading";
 import { useState } from "react";
+import { handleUserInfo } from "./store/modules/userInfo/action";
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +33,9 @@ function App() {
 
   // 获取用户信息
   const handleGetUserInfo = async () => {
+    const res = await dispatch(handleUserInfo());
+    console.log(res, 222);
+    return;
     const { data, error } = await supabase.auth.getUser();
     if (error) {
       console.log(error);
