@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { message } from "antd";
 import supabase from "../../../utils/supabase";
 import { useDispatch } from "react-redux";
+import { handleUserInfo } from "../../../store/modules/userInfo/action";
 function Login() {
   const [messageApi, contextHolder] = message.useMessage();
   const [formData, setFormData] = useState({
@@ -40,11 +41,15 @@ function Login() {
           type: "success",
           content: "登录成功！",
         });
-        dispatch({
-          type: "SET_USER_INFO",
-          payload: data,
-        });
-        navigate("/");
+        const res = await dispatch(handleUserInfo());
+        if (res.type === "error") {
+          messageApi.open({
+            type: "error",
+            content: res.message,
+          });
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       // 捕获其他异常

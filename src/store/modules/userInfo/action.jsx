@@ -26,7 +26,7 @@ export const handleUserInfo = () => {
     const { data, error } = await supabase.auth.getUser();
     if (error) {
       console.log(error);
-      return { type: "error", message: error };
+      return { type: "error", message: "用户未登录" };
     } else if (data) {
       // 存储基本用户信息
       dispatch({
@@ -41,6 +41,6 @@ export const handleUserInfo = () => {
       });
       return { type: "success", message: data, userInfo: userInfo };
     }
-    return { type: "error", message: error };
+    return { type: "error", message: "用户信息获取失败" };
   };
 };
