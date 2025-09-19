@@ -1,42 +1,48 @@
 import { useSelector } from "react-redux";
 import styles from "./index.module.scss";
-import { getUserInfo } from "../../store/modules/userInfo/selectors";
 import { delDate } from "../../utils/delDate";
 import { useEffect, useState } from "react";
 import { quote } from "../../constants/quote";
-import { getDate, getLoveBefore } from "../../store/modules/date/selectors";
+import { getDate } from "../../store/modules/date/selectors";
 import { getUserInfoInfo } from "../../store/modules/userInfo/selectors";
+import { four } from "./constants/data";
+import supabase from "../../utils/supabase";
+import getID from "../../utils/getID";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const data = useSelector(getDate);
-  const userInfo = useSelector(getUserInfo);
   const userInfoInfo = useSelector(getUserInfoInfo);
+  //获取纪念日数据
+  const [mainData, setMainData] = useState([]);
+  const handleGetDate = async () => {
+    const id = await getID();
+    const { data, error } = await supabase
+      .from("commemorative")
+      .select("*")
+      .eq("user_id", id);
+    const sortList = data.sort((a, b) => b.top - a.top);
+    setMainData(sortList);
+  };
 
   // 添加空值检查
   const diffDays = userInfoInfo?.loveBefore
     ? delDate(userInfoInfo.loveBefore)
     : 0;
-  const mainData = data || [];
-  const four = [
-    {
-      logo: "📷",
-      name: "情侣相册",
-    },
-    {
-      logo: "✍️",
-      name: "恋爱日记",
-    },
-    {
-      logo: "✅",
-      name: "代办清单",
-    },
-    {
-      logo: "❓",
-      name: "情侣问答",
-    },
-  ];
+
   const [num, setNum] = useState(0);
+
+  //跳转
+  const navigate = useNavigate();
+  const handleNavigate = (path) => {
+    if (path) {
+      navigate(path);
+    }
+  };
   useEffect(() => {
+    // 获取随机语录
     setNum(Math.floor(Math.random() * quote.length));
+    //获取纪念日信息
+    handleGetDate();
   }, []);
   return (
     <div className={styles.home}>
@@ -53,10 +59,13 @@ const Home = () => {
         </div>
         <div className={styles.lovedesc}>始于{userInfoInfo?.loveBefore}</div>
       </div>
-      <div className={styles.memory}>
+      <div
+        className={styles.memory}
+        onClick={() => handleNavigate("/commemorative")}
+      >
         <div className={styles.lovespan}>📅重要的纪念日</div>
         <div className={styles.dataItem}>
-          {mainData.map((item) => (
+          {mainData.slice(0, 3).map((item) => (
             <div className={styles.loveItem} key={item.id}>
               <div className={styles.loveItemName}>{item.name}</div>
               <div className={styles.loveItemDate}>{item.date}</div>
@@ -72,7 +81,11 @@ const Home = () => {
       </div>
       <div className={styles.four}>
         {four.map((item, index) => (
-          <div className={styles.fourItem} key={index}>
+          <div
+            className={styles.fourItem}
+            key={index}
+            onClick={() => handleNavigate(item.path)}
+          >
             <div className={styles.fourItemName}>{item.logo}</div>
             <div className={styles.fourItemName}>{item.name}</div>
           </div>

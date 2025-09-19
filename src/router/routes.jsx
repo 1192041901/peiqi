@@ -49,7 +49,11 @@ const routes = [
   },
   {
     path: "/user",
-    element: <RouteLoading element={<User />} />,
+    element: (
+      <Layout>
+        <RouteLoading element={<User />} />
+      </Layout>
+    ),
   },
   {
     path: "/login",

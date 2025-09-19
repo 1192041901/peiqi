@@ -5,8 +5,11 @@
   display: flex;
   flex-direction: column;
   overflow: auto;
+  padding: 56px 20px 70px 20px;
+  box-sizing: border-box;
   .mineHeader {
     position: fixed;
+    z-index: 1;
     width: 100%;
     top: 0;
     left: 0;
@@ -22,6 +25,159 @@
       font-size: 16px;
       font-weight: 600;
       color: $font-1;
+    }
+  }
+  .com {
+    width: 100%;
+    background: linear-gradient(
+      135deg,
+      #ff7b9c 0%,
+      #a78bfa 100%
+    ); /* 粉紫渐变 */
+    color: white;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(255, 123, 156, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    .imgwarp {
+      display: flex;
+      align-items: center;
+      .img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #fff;
+        overflow: hidden;
+        &:nth-child(1) {
+          margin-right: -10px;
+        }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+    .imgOnce {
+      display: flex;
+      align-items: center;
+      .img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #fff;
+        overflow: hidden;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center;
+        }
+      }
+    }
+    .comName {
+      font-size: 17px;
+      font-weight: 600;
+      color: #fff;
+      margin-top: 10px;
+    }
+    .comDesc {
+      font-size: 12px;
+      color: #fff;
+      margin-top: 5px;
+    }
+    .comBtn {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 5px;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      span {
+        font-size: 12px;
+        color: #fff;
+      }
+    }
+    .span {
+      font-size: 12px;
+      border-radius: 25px;
+      border: 1px solid #fff;
+      margin-top: 10px;
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 3px 10px;
+      span {
+        font-size: 16px;
+        color: #fff;
+      }
+    }
+  }
+  .contion {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-sizing: border-box;
+    padding: 10px 20px;
+    .title {
+      font-size: 16px;
+      font-weight: 600;
+      color: $font-1;
+      box-sizing: border-box;
+    }
+    .warp {
+      width: 100%;
+      box-sizing: border-box;
+      .item {
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #eee;
+
+        box-sizing: border-box;
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+      .left {
+        display: flex;
+        align-items: center;
+        .icon {
+          font-size: 16px;
+          color: $font-1;
+          border-radius: 5px;
+          margin-right: 10px;
+          &.icon1 {
+            background-color: $main-1;
+          }
+          &.icon2 {
+            background-color: $main-2;
+          }
+          &.icon3 {
+            background-color: $fu-2;
+          }
+        }
+        .name {
+          font-size: 15px;
+          color: $font-1;
+        }
+      }
+      .right {
+        font-size: 16px;
+        margin-left: 10px;
+        color: $font-3;
+      }
     }
   }
 }

@@ -38,7 +38,7 @@ function Register() {
           type: "success",
           content: "注册成功！请前往邮箱验证",
         });
-        // navigate("/login");
+        navigate("/login");
       }
     } catch (err) {
       // 捕获其他异常

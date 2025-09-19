@@ -3,7 +3,7 @@ import * as type from "./index.module.scss";
 import { navList } from "./constants/index.jsx";
 import Add from "./components/add/index.jsx";
 import { useDispatch, useSelector } from "react-redux";
-import { getAlbum, getIsFirst } from "../../store/modules/album/selectors.jsx";
+import { getIsFirst } from "../../store/modules/album/selectors.jsx";
 import Detail from "./components/detail/index.jsx";
 import Hint from "./components/hint/index.jsx";
 import supabase from "../../utils/supabase.jsx";
@@ -11,7 +11,6 @@ import getID from "../../utils/getID.jsx";
 const Album = () => {
   const [active, setActive] = useState("全部"); // 当前选中的导航
   const [addState, setAddState] = useState(false); // 添加状态
-  // const album = useSelector(getAlbum); // 全部相册信息
   const [albumList, setAlbumList] = useState([]); // 当前选中的相册信息
   const [detailState, setDetailState] = useState(false); // 详情状态
   const [detailParams, setDetailParams] = useState({}); // 详情参数

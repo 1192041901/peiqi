@@ -1,85 +1,22 @@
-import supabase from "../../utils/supabase";
+import {
+  handleClick,
+  handleUpdate,
+  handleDelete,
+  handleRegister,
+  handleLogin,
+  handleGetUser,
+  handleLogout,
+  handleUnsubscribe,
+  sendBindingRequest,
+  acceptBindingRequest,
+  rejectBindingRequest,
+  getUserBindings,
+  getBoundUsers,
+  checkUsersBound,
+  getBoundUserProfile,
+} from "./data";
 
 function Test() {
-  // 获取数据
-  const handleClick = async (userId) => {
-    // 根据用户 ID 获取 profiles 表中的信息
-    const { data, error, status } = await supabase
-      .from("profiles")
-      .select("*") // 选择需要的字段
-      .eq("id", userId) // 根据 ID 匹配用户
-      .single(); // 只期望返回一条记录
-    if (error && status !== 406) {
-      // 406 错误表示未找到记录，可能是新用户还没有 profile
-      console.error("获取用户配置信息出错:", error.message);
-      return null;
-    }
-
-    if (data) {
-      console.log("用户配置信息:", data);
-      return data;
-    }
-    return null;
-  };
-  //修改数据
-  const handleUpdate = async (userId) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .update({
-        username: "newusername",
-        ceshi: "https://newwebsite.com",
-        age: 100,
-        id: userId,
-      })
-      .eq("id", userId);
-    console.log(data);
-    console.log(error);
-  };
-  //删除数据
-  const handleDelete = async (userId) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .delete()
-      .eq("id", userId);
-    console.log(data);
-    console.log(error);
-  };
-  //注册
-  const handleRegister = async () => {
-    const { data, error } = await supabase.auth.signUp({
-      email: "1192041901@qq.com",
-      password: "dengshuai0919",
-    });
-    console.log(data);
-    console.log(error);
-  };
-  //登录
-  const handleLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email: "1192041901@qq.com",
-      password: "123456",
-    });
-    console.log(data);
-    console.log(error);
-  };
-  //获取当前用户
-  const handleGetUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    console.log(data);
-    console.log(error);
-  };
-  //登出
-  const handleLogout = async () => {
-    const { data, error } = await supabase.auth.signOut();
-    console.log(data);
-    console.log(error);
-  };
-  //注销
-  const handleUnsubscribe = async () => {
-    const { error } = await supabase.auth.admin.deleteUser(
-      "e210c009-6e86-4ae6-9b89-dd085344335a" // 具体的用户ID
-    );
-  };
   return (
     <div>
       <button
@@ -144,6 +81,65 @@ function Test() {
         }}
       >
         删除数据
+      </button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <button
+        onClick={() => {
+          sendBindingRequest("e210c009-6e86-4ae6-9b89-dd085344335a");
+        }}
+      >
+        发送绑定请求
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          acceptBindingRequest("29211362-5e27-45d0-a4d4-5faa5841b69d");
+        }}
+      >
+        接受绑定请求
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          rejectBindingRequest("e210c009-6e86-4ae6-9b89-dd085344335a");
+        }}
+      >
+        拒绝绑定请求
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          getUserBindings();
+        }}
+      >
+        获取用户绑定关系
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          getBoundUsers();
+        }}
+      >
+        获取已绑定用户列表
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          checkUsersBound("e210c009-6e86-4ae6-9b89-dd085344335a");
+        }}
+      >
+        检查两个用户是否已绑定
+      </button>
+      <br />
+      <button
+        onClick={() => {
+          getBoundUserProfile("e210c009-6e86-4ae6-9b89-dd085344335a");
+        }}
+      >
+        获取绑定用户资料
       </button>
     </div>
   );
