@@ -30,7 +30,7 @@ const Commemorative = () => {
   // 获取纪念日信息
   const handleGetDate = async () => {
     const id = await getID();
-    if (loverInfo.id) {
+    if (loverInfo?.id) {
       const { data, error } = await supabase
         .from("commemorative")
         .select("*")

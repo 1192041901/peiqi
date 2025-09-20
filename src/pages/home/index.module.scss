@@ -19,9 +19,13 @@
     background-color: #fff;
     .name {
       font-size: 20px;
-      font-weight: 600;
-      color: $font-1;
+      font-weight: 500;
+      color: $main-1;
       font-size: 16px;
+      span {
+        margin: 0 5px;
+        color: $main-2;
+      }
     }
   }
   .loveData {

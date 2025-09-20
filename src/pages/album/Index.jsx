@@ -33,7 +33,7 @@ const Album = () => {
   // 获取相册信息
   const handleGetAlbum = async () => {
     const id = await getID();
-    if (loverInfo.id) {
+    if (loverInfo?.id) {
       const { data, error } = await supabase
         .from("album")
         .select("*")

@@ -4,7 +4,10 @@ import { delDate } from "../../utils/delDate";
 import { useEffect, useState } from "react";
 import { quote } from "../../constants/quote";
 import { getDate } from "../../store/modules/date/selectors";
-import { getUserInfoInfo } from "../../store/modules/userInfo/selectors";
+import {
+  getUserInfoInfo,
+  getLoverInfo,
+} from "../../store/modules/userInfo/selectors";
 import { four } from "./constants/data";
 import supabase from "../../utils/supabase";
 import getID from "../../utils/getID";
@@ -12,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 const Home = () => {
   const data = useSelector(getDate);
   const userInfoInfo = useSelector(getUserInfoInfo);
+  const loverInfo = useSelector(getLoverInfo);
   //获取纪念日数据
   const [mainData, setMainData] = useState([]);
   const handleGetDate = async () => {
@@ -48,7 +52,9 @@ const Home = () => {
     <div className={styles.home}>
       <div className={styles.top}>
         <div className={styles.name}>
-          {userInfoInfo?.girl || ""}&{userInfoInfo?.boy || ""}
+          {userInfoInfo?.username || ""}
+          {loverInfo?.username && <span>&</span>}
+          {loverInfo?.username || ""}
         </div>
       </div>
       <div className={styles.loveData}>
