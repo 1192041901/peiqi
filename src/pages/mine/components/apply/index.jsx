@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import supabase from "../../../../utils/supabase";
 import getID from "../../../../utils/getID";
 import { useState } from "react";
-function Apply({ setApplyState }) {
+function Apply({ setApplyState, toast, bingDingOther, getBingDing }) {
   const [targetUserId, setTargetUserId] = useState("");
   const callDialog = {
     onClose: () => {
@@ -12,6 +12,7 @@ function Apply({ setApplyState }) {
     onSure: () => {
       sendBindingRequest(targetUserId);
       setApplyState(false);
+      getBingDing();
     },
   };
   const params = {
@@ -19,6 +20,7 @@ function Apply({ setApplyState }) {
     sureSpan: "发起申请",
     cancelSpan: "取消",
   };
+
   // 发送绑定请求
   const sendBindingRequest = async (targetUserId) => {
     const id = getID();
@@ -27,6 +29,10 @@ function Apply({ setApplyState }) {
       initiator_user_id: id,
     });
     if (error) throw error;
+    toast({
+      type: "success",
+      content: "发送成功",
+    });
     return data;
   };
   return (

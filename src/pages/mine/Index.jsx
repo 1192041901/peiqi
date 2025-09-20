@@ -24,13 +24,24 @@ const Mine = () => {
   const [bingDingUser, setBingDingUser] = useState([]); //发起者
   const [bingDingOther, setBingDingOther] = useState([]); //接收者
   const [messageApi, contextHolder] = message.useMessage();
-  //获取绑定关系的相关信息
+  //获取所有相关绑定关系的信息
   const getBingDing = async () => {
     const { data, error } = await supabase
       .from("user_bindings")
-      .select("*")
+      .select(
+        `
+        id,
+        status,
+        created_at,
+        accepted_at,
+        initiated_by,
+        user_a:user_a_id (*),
+        user_b:user_b_id (*)
+      `
+      )
       .or(`user_a_id.eq.${userInfoInfo.id},user_b_id.eq.${userInfoInfo.id}`)
       .order("created_at", { ascending: false });
+    console.log(data, 111);
     if (error) {
       console.log(error);
     } else {
@@ -124,27 +135,33 @@ const Mine = () => {
       <div className={styles.contion}>
         <div className={styles.title}>关系管理</div>
         <div className={styles.warp}>
-          <div className={styles.item} onClick={() => setMessageState(true)}>
-            <div className={styles.left}>
-              <div className={styles.icon + " " + styles.icon2}>📩</div>
-              <div className={styles.name}>消息处理</div>
+          {!userInfoInfo.binding && (
+            <div className={styles.item} onClick={() => setMessageState(true)}>
+              <div className={styles.left}>
+                <div className={styles.icon + " " + styles.icon2}>📩</div>
+                <div className={styles.name}>消息处理</div>
+              </div>
+              <div className={styles.right}>→</div>
             </div>
-            <div className={styles.right}>→</div>
-          </div>
-          <div className={styles.item} onClick={() => setApplyState(true)}>
-            <div className={styles.left}>
-              <div className={styles.icon + " " + styles.icon2}>💌</div>
-              <div className={styles.name}>恋爱申请</div>
+          )}
+          {!userInfoInfo.binding && (
+            <div className={styles.item} onClick={() => setApplyState(true)}>
+              <div className={styles.left}>
+                <div className={styles.icon + " " + styles.icon2}>💌</div>
+                <div className={styles.name}>恋爱申请</div>
+              </div>
+              <div className={styles.right}>→</div>
             </div>
-            <div className={styles.right}>→</div>
-          </div>
-          <div className={styles.item} onClick={() => setSettingState(true)}>
-            <div className={styles.left}>
-              <div className={styles.icon + " " + styles.icon2}>📅</div>
-              <div className={styles.name}>恋爱设置</div>
+          )}
+          {userInfoInfo.binding && (
+            <div className={styles.item} onClick={() => setSettingState(true)}>
+              <div className={styles.left}>
+                <div className={styles.icon + " " + styles.icon2}>📅</div>
+                <div className={styles.name}>恋爱设置</div>
+              </div>
+              <div className={styles.right}>→</div>
             </div>
-            <div className={styles.right}>→</div>
-          </div>
+          )}
         </div>
       </div>
       <div className={styles.contion}>
@@ -170,11 +187,20 @@ const Mine = () => {
       {editState && <Edit setEditState={setEditState} />}
       {/* 消息处理弹窗 */}
       {messageState && (
-        <Message setMessageState={setMessageState} bingDing={bingDing} />
+        <Message
+          setMessageState={setMessageState}
+          bingDing={bingDing}
+          getBingDing={getBingDing}
+        />
       )}
       {/* 恋爱申请弹窗 */}
       {applyState && (
-        <Apply setApplyState={setApplyState} bingDingUser={bingDingUser} />
+        <Apply
+          setApplyState={setApplyState}
+          bingDingUser={bingDingUser}
+          getBingDing={getBingDing}
+          toast={toast}
+        />
       )}
       {/* 分享码弹窗 */}
       {shareState && <Share setShareState={setShareState} toast={toast} />}

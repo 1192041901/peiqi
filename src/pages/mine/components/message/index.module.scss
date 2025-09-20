@@ -1,0 +1,78 @@
+.messageContent {
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    color: $font-1;
+  }
+  .warp {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: $bgc-1;
+    border-radius: 5px;
+    padding: 5px 10px;
+    .item {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      &:last-child {
+        border-bottom: none;
+      }
+      .left {
+        display: flex;
+        align-items: center;
+        width: 160px;
+        .icon {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          overflow: hidden;
+          margin-right: 5px;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+          }
+        }
+        .name {
+          font-size: 14px;
+          color: $font-1;
+        }
+      }
+      .right {
+        flex: 1 1 0;
+        font-size: 14px;
+        color: $font-1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .right2 {
+        flex: 1 1 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+      .right2 span {
+        font-size: 15px;
+        color: $font-1;
+        &.span1 {
+          color: #fff;
+          padding: 0 4px;
+          background-color: $main-1;
+          border-radius: 5px;
+        }
+        &.span2 {
+          color: #fff;
+          padding: 0 4px;
+          border-radius: 5px;
+          background-color: $main-2;
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}
