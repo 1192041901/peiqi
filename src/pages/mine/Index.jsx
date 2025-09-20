@@ -6,8 +6,10 @@ import Edit from "./components/edit";
 import Message from "./components/message";
 import Apply from "./components/apply";
 import Setting from "./components/setting";
+import Share from "./components/share";
 import { useEffect, useState } from "react";
 import supabase from "../../utils/supabase";
+import { message } from "antd";
 const Mine = () => {
   const userInfoInfo = useSelector(getUserInfoInfo);
   const diffDays = userInfoInfo?.loveBefore
@@ -17,10 +19,11 @@ const Mine = () => {
   const [messageState, setMessageState] = useState(false);
   const [applyState, setApplyState] = useState(false);
   const [settingState, setSettingState] = useState(false);
+  const [shareState, setShareState] = useState(false);
   const [bingDing, setBingDing] = useState([]);
   const [bingDingUser, setBingDingUser] = useState([]); //发起者
   const [bingDingOther, setBingDingOther] = useState([]); //接收者
-
+  const [messageApi, contextHolder] = message.useMessage();
   //获取绑定关系的相关信息
   const getBingDing = async () => {
     const { data, error } = await supabase
@@ -34,19 +37,16 @@ const Mine = () => {
       setBingDing(data);
     }
   };
+  //获取toast
+  const toast = (data) => {
+    messageApi.open(data);
+  };
   useEffect(() => {
     getBingDing();
   }, []);
-  useEffect(() => {
-    setBingDingUser(
-      bingDing.find((item) => item.user_a_id === userInfoInfo.id)
-    );
-    setBingDingOther(
-      bingDing.find((item) => item.user_b_id === userInfoInfo.id)
-    );
-  }, [bingDing]);
   return (
     <div className={styles.mine}>
+      {contextHolder}
       <div className={styles.mineHeader}>
         <span>爱情猪圈</span>
       </div>
@@ -95,8 +95,16 @@ const Mine = () => {
           <div className={styles.comBtn} onClick={() => setEditState(true)}>
             <span>编辑</span>
           </div>
-          <div className={styles.span}>
-            <span>邀请另一半</span>
+          <div className={styles.spanWarp}>
+            <div className={styles.xiao} onClick={() => setMessageState(true)}>
+              <span>消息库</span>
+            </div>
+            <div className={styles.span} onClick={() => setApplyState(true)}>
+              <span>邀请另一半</span>
+            </div>
+            <div className={styles.fen} onClick={() => setShareState(true)}>
+              <span>分享码</span>
+            </div>
           </div>
         </div>
       )}
@@ -162,15 +170,14 @@ const Mine = () => {
       {editState && <Edit setEditState={setEditState} />}
       {/* 消息处理弹窗 */}
       {messageState && (
-        <Message
-          setMessageState={setMessageState}
-          bingDingOther={bingDingOther}
-        />
+        <Message setMessageState={setMessageState} bingDing={bingDing} />
       )}
       {/* 恋爱申请弹窗 */}
       {applyState && (
         <Apply setApplyState={setApplyState} bingDingUser={bingDingUser} />
       )}
+      {/* 分享码弹窗 */}
+      {shareState && <Share setShareState={setShareState} toast={toast} />}
       {/* 恋爱设置弹窗 */}
       {settingState && <Setting setSettingState={setSettingState} />}
     </div>

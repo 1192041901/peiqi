@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Dialog from "../../../../comment/dialog";
 import styles from "./index.module.scss";
-function Message({ setMessageState, bingDingOther }) {
+function Message({ setMessageState, bingDing }) {
   const callDialog = {
     onClose: () => {
       setMessageState(false);
@@ -11,8 +11,8 @@ function Message({ setMessageState, bingDingOther }) {
     },
   };
   useEffect(() => {
-    console.log(bingDingOther);
-  }, [bingDingOther]);
+    console.log(bingDing);
+  }, [bingDing]);
   const params = {
     title: "消息处理",
     sureSpan: "确定",

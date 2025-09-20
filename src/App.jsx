@@ -2,9 +2,7 @@ import { useEffect } from "react";
 import "./App.scss";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import supabase from "./utils/supabase";
 import routes from "./router/routes";
-import Loading from "./router/loading/loading";
 import { useState } from "react";
 import { handleUserInfo } from "./store/modules/userInfo/action";
 function App() {

@@ -96,7 +96,7 @@ function Test() {
       <br />
       <button
         onClick={() => {
-          acceptBindingRequest("29211362-5e27-45d0-a4d4-5faa5841b69d");
+          acceptBindingRequest("58b9923d-4778-4fd6-8a61-17d130289f4a");
         }}
       >
         接受绑定请求
@@ -104,7 +104,7 @@ function Test() {
       <br />
       <button
         onClick={() => {
-          rejectBindingRequest("e210c009-6e86-4ae6-9b89-dd085344335a");
+          rejectBindingRequest("29211362-5e27-45d0-a4d4-5faa5841b69d");
         }}
       >
         拒绝绑定请求

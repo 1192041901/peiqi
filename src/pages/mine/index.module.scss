@@ -108,16 +108,47 @@
         color: #fff;
       }
     }
-    .span {
-      font-size: 12px;
-      border-radius: 25px;
-      border: 1px solid #fff;
+    .spanWarp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
       margin-top: 10px;
-      background-color: rgba(255, 255, 255, 0.2);
-      padding: 3px 10px;
-      span {
-        font-size: 16px;
-        color: #fff;
+      .xiao {
+        font-size: 12px;
+        border-radius: 25px;
+        border: 1px solid #fff;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 3px 10px;
+        span {
+          font-size: 12px;
+          color: #fff;
+        }
+      }
+      .fen {
+        font-size: 12px;
+        border-radius: 25px;
+        border: 1px solid #fff;
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 3px 10px;
+        span {
+          font-size: 12px;
+          color: #fff;
+        }
+      }
+
+      .span {
+        margin: 0 10px;
+
+        font-size: 12px;
+        border-radius: 25px;
+        border: 1px solid #fff;
+        background-color: #fff;
+        padding: 3px 10px;
+        span {
+          font-size: 16px;
+          color: $main-1;
+        }
       }
     }
   }

@@ -30,15 +30,16 @@ const acceptBindingRequest = async (bindingId) => {
 const rejectBindingRequest = async (bindingId) => {
   const id = getID();
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("user_bindings")
     .update({
       status: "rejected",
       updated_at: new Date().toISOString(),
     })
-    .eq("id", bindingId)
+    .eq("initiated_by", bindingId)
     .or(`user_a_id.eq.${id},user_b_id.eq.${id}`)
     .eq("status", "pending");
+  console.log(data, 111);
 
   if (error) throw error;
 };
