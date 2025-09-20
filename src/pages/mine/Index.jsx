@@ -1,17 +1,24 @@
 import styles from "./index.module.scss";
 import { useSelector } from "react-redux";
-import { getUserInfoInfo } from "../../store/modules/userInfo/selectors";
+import {
+  getUserInfoInfo,
+  getLoverInfo,
+} from "../../store/modules/userInfo/selectors";
 import { delDate } from "../../utils/delDate";
 import Edit from "./components/edit";
 import Message from "./components/message";
 import Apply from "./components/apply";
 import Setting from "./components/setting";
 import Share from "./components/share";
+import About from "./components/about";
 import { useEffect, useState } from "react";
 import supabase from "../../utils/supabase";
 import { message } from "antd";
+import Dialog from "../../comment/dialog";
+import { useNavigate } from "react-router-dom";
 const Mine = () => {
   const userInfoInfo = useSelector(getUserInfoInfo);
+  const loverInfo = useSelector(getLoverInfo);
   const diffDays = userInfoInfo?.loveBefore
     ? delDate(userInfoInfo.loveBefore)
     : 0;
@@ -20,10 +27,11 @@ const Mine = () => {
   const [applyState, setApplyState] = useState(false);
   const [settingState, setSettingState] = useState(false);
   const [shareState, setShareState] = useState(false);
+  const [aboutState, setAboutState] = useState(false);
+  const [logoutState, setLogoutState] = useState(false);
   const [bingDing, setBingDing] = useState([]);
-  const [bingDingUser, setBingDingUser] = useState([]); //发起者
-  const [bingDingOther, setBingDingOther] = useState([]); //接收者
   const [messageApi, contextHolder] = message.useMessage();
+  const navigate = useNavigate();
   //获取所有相关绑定关系的信息
   const getBingDing = async () => {
     const { data, error } = await supabase
@@ -41,7 +49,6 @@ const Mine = () => {
       )
       .or(`user_a_id.eq.${userInfoInfo.id},user_b_id.eq.${userInfoInfo.id}`)
       .order("created_at", { ascending: false });
-    console.log(data, 111);
     if (error) {
       console.log(error);
     } else {
@@ -52,9 +59,37 @@ const Mine = () => {
   const toast = (data) => {
     messageApi.open(data);
   };
+  //退出登录
+  const logout = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("退出登录失败:", error.message);
+        throw error;
+      }
+      navigate("/login");
+    } catch (error) {
+      console.error("退出登录异常:", error);
+    }
+  };
   useEffect(() => {
     getBingDing();
   }, []);
+  const callDialog = {
+    onClose: () => {
+      setLogoutState(false);
+    },
+    onSure: () => {
+      logout();
+      setLogoutState(false);
+    },
+  };
+
+  const params = {
+    title: "是否决定退出",
+    sureSpan: "退出登录",
+    cancelSpan: "容我三思",
+  };
   return (
     <div className={styles.mine}>
       {contextHolder}
@@ -67,7 +102,7 @@ const Mine = () => {
             <div className={styles.img}>
               <img
                 src={
-                  userInfoInfo?.boyImg ||
+                  userInfoInfo?.avatar ||
                   "https://i.ibb.co/S4HxfbYy/20250919113727-32-13.png"
                 }
                 alt=""
@@ -76,7 +111,7 @@ const Mine = () => {
             <div className={styles.img}>
               <img
                 src={
-                  userInfoInfo?.girlImg ||
+                  loverInfo?.avatar ||
                   "https://i.ibb.co/Y4TnW6jJ/20250919113657-31-13.png"
                 }
                 alt=""
@@ -84,12 +119,12 @@ const Mine = () => {
             </div>
           </div>
           <div className={styles.comName}>
-            {userInfoInfo?.boy || ""}
+            {userInfoInfo?.username || ""}
             <span>❤️</span>
-            {userInfoInfo?.girl || ""}
+            {loverInfo?.username || ""}
           </div>
           <div className={styles.comDesc}>恋爱中·已相恋{diffDays}天</div>
-          <div className={styles.comBtn}>
+          <div className={styles.comBtn} onClick={() => setEditState(true)}>
             <span>编辑</span>
           </div>
         </div>
@@ -167,14 +202,14 @@ const Mine = () => {
       <div className={styles.contion}>
         <div className={styles.title}>系统设置</div>
         <div className={styles.warp}>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={() => setAboutState(true)}>
             <div className={styles.left}>
               <div className={styles.icon + " " + styles.icon3}>ℹ️</div>
               <div className={styles.name}>关于我们</div>
             </div>
             <div className={styles.right}>→</div>
           </div>
-          <div className={styles.item}>
+          <div className={styles.item} onClick={() => setLogoutState(true)}>
             <div className={styles.left}>
               <div className={styles.icon + " " + styles.icon3}>🔄</div>
               <div className={styles.name}>退出登录</div>
@@ -197,7 +232,6 @@ const Mine = () => {
       {applyState && (
         <Apply
           setApplyState={setApplyState}
-          bingDingUser={bingDingUser}
           getBingDing={getBingDing}
           toast={toast}
         />
@@ -205,7 +239,13 @@ const Mine = () => {
       {/* 分享码弹窗 */}
       {shareState && <Share setShareState={setShareState} toast={toast} />}
       {/* 恋爱设置弹窗 */}
-      {settingState && <Setting setSettingState={setSettingState} />}
+      {settingState && (
+        <Setting setSettingState={setSettingState} toast={toast} />
+      )}
+      {/* 关于我们弹窗 */}
+      {aboutState && <About setAboutState={setAboutState} />}
+      {/* 退出登录弹窗 */}
+      {logoutState && <Dialog callDialog={callDialog} params={params}></Dialog>}
     </div>
   );
 };

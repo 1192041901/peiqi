@@ -3,6 +3,7 @@ import * as types from "./type";
 // 用户基本信息
 const initialState = {
   userInfo: null, //用户信息(来自supabase)
+  loverInfo: null, //恋人信息(来自业务)
   info: null, //用户信息(来自业务)
 };
 const userReducer = (state = initialState, action) => {
@@ -23,6 +24,14 @@ const userReducer = (state = initialState, action) => {
       return { ...state, info: null };
     case types.GET_USER_INFO_INFO:
       return { ...state, info: action.payload };
+    case types.SET_LOVER_INFO:
+      return { ...state, loverInfo: action.payload };
+    case types.UPDATE_LOVER_INFO:
+      return { ...state, loverInfo: action.payload };
+    case types.DELETE_LOVER_INFO:
+      return { ...state, loverInfo: null };
+    case types.GET_LOVER_INFO:
+      return { ...state, loverInfo: action.payload };
     default:
       return state;
   }

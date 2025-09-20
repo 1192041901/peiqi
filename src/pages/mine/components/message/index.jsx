@@ -69,7 +69,6 @@ function Message({ setMessageState, bingDing, getBingDing }) {
       .eq("initiated_by", bindingId)
       .or(`user_a_id.eq.${id},user_b_id.eq.${id}`)
       .eq("status", "pending");
-    console.log(data, 111);
     if (error) throw error;
     getBingDing();
   };

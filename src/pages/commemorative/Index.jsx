@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import styles from "./index.module.scss";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { delDate, delDate2 } from "../../utils/delDate";
 import Dialog from "../../comment/dialog";
 import supabase from "../../utils/supabase";
 import getID from "../../utils/getID";
+import { getLoverInfo } from "../../store/modules/userInfo/selectors";
 const Commemorative = () => {
   const [addState, setAddState] = useState(false);
   const [editState, setEditState] = useState(false);
@@ -25,17 +26,30 @@ const Commemorative = () => {
     date: "",
     top: false,
   });
+  const loverInfo = useSelector(getLoverInfo);
   // 获取纪念日信息
   const handleGetDate = async () => {
     const id = await getID();
-    const { data, error } = await supabase
-      .from("commemorative")
-      .select("*")
-      .eq("user_id", id);
-    if (error) {
-      console.log(error);
+    if (loverInfo.id) {
+      const { data, error } = await supabase
+        .from("commemorative")
+        .select("*")
+        .or(`user_id.eq.${id},user_id.eq.${loverInfo.id}`);
+      if (error) {
+        console.log(error);
+      } else {
+        setListAll(data);
+      }
     } else {
-      setListAll(data);
+      const { data, error } = await supabase
+        .from("commemorative")
+        .select("*")
+        .eq("user_id", id);
+      if (error) {
+        console.log(error);
+      } else {
+        setListAll(data);
+      }
     }
   };
   useEffect(() => {

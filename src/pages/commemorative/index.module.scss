@@ -22,7 +22,9 @@
       font-size: 20px;
       background-color: $main-1;
       border-radius: 30px;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       span {
         color: $bgc-2;
       }

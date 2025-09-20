@@ -9,5 +9,4 @@ export const getdata = async () => {
     .from("profiles")
     .select("*")
     .eq("id", "29211362-5e27-45d0-a4d4-5faa5841b69d");
-  console.log(userData, 111);
 };

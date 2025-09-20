@@ -3,7 +3,7 @@ import styles from "./index.module.scss";
 import supabase from "../../../../utils/supabase";
 import getID from "../../../../utils/getID";
 import { useState } from "react";
-function Apply({ setApplyState, toast, bingDingOther, getBingDing }) {
+function Apply({ setApplyState, toast, getBingDing }) {
   const [targetUserId, setTargetUserId] = useState("");
   const callDialog = {
     onClose: () => {
